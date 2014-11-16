@@ -1,0 +1,220 @@
+	<!DOCTYPE html>
+	<html lang="en" ng-app="travelpacks">
+	<head>
+		<meta charset="UTF-8">
+		<title>TravelPacks</title>
+		<link rel="stylesheet" href="css/foundation.css">
+		<link rel="stylesheet" href="css/styles.css">
+		<script src="js/jquery.min.js"></script>
+		<script src="js/angular.min.js"></script>
+	</head>
+	<body ng-controller="mainApp">
+		<header>
+			<div class="row">
+				<div class="large-12 columns">
+					<h1>Welcome to TravelPacks !</h1>		
+				</div>
+			</div>
+		</header>
+		<div class="content">
+			<div class="row">
+				<div class="large-12 columns belakang">
+					<h2 class="putih">Search Travel Package</h2>
+					<div class="row">
+						<div class="large-4 columns">
+							<div class="row">
+								<div class="large-6 columns">
+									<h3 class="putih">Origin</h3>
+									<input type="text" class="input-box" id="origin" placeholder="travel from where" ng-model="origin">			
+								</div>
+								<div class="large-6 columns">
+									<h3 class="putih">Destination</h3>
+									<input type="text" class="input-box" id="destination" placeholder="travel to where" ng-model="destination">		
+								</div>						
+							</div>
+						</div>
+						<div class="large-4 columns">
+							<div class="row">
+								<div class="large-6 columns">
+									<h3 class="putih">Departure</h3>
+									<input type="date" class="input-box" id="departure" placeholder="departure date" ng-model="waktuBerangkat">
+								</div>
+								<div class="large-6 columns">
+									<h3 class="putih">Return</h3>
+									<input type="date" class="input-box" id="return" placeholder="return date" ng-model="waktuPulang">
+								</div>
+							</div>
+						</div>
+						<div class="large-2 columns">
+							<div class="row">
+								<div class="large-6 columns">
+									<img src="img/img1.png" class="segaris" style="width:30px; margin-top: 45px;"/>	
+									<input type="text" class="input-box segaris" id="adult" placeholder="0" style="width:30px; float: right; margin-top: 45px;" ng-model="adults">
+								</div>
+								<div class="large-6 columns">
+									<img src="img/img2.png" class="segaris" style="width:40px; margin-top: 50px;"/>	
+									<input type="text" class="input-box segaris" id="child" placeholder="0" style="width:30px; float: right; margin-top: 45px;" ng-model="children">
+								</div>
+							</div>
+						</div>
+						<div class="large-2 columns">
+							<button id="search" class="search" ng-click="processData()">
+								<img src="img/go1.png" href="#"/>
+							</button>
+						</div>
+					</div>			
+				</div>
+			</div>
+			</br>
+			<div ng-show="stage === 1">
+				<div class="center">
+					<h3>Loading...</h3>
+				</div>
+			</div>
+			<div ng-show="stage === 2">
+				<div class="row">
+					<div class="large-12 columns">
+						<h2>Result Package</h2>
+						<div class="data-entered">
+							<h3>{{ origin }} - {{ destination }}</h3>
+							<h3>{{ waktuBerangkat }} - {{ waktuPulang }}</h3>
+							<h3>{{ adults }} adults, {{ children }} children</h3>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="large-5 columns">
+						<div class="belakang" style="padding: 20px;">
+							<h2 class="putih" style="margin-left: 20px;">Most Convenient</h2>
+							<div class="belakang2 result" style="margin: 0; padding: 20px 20px 0;">
+								<div class="belakang" style="margin: 0 0 20px;">
+									<div class="row">
+										<div class="large-2 column">
+											<img src="img/1.png" style="width:100px; height: 50px; margin: 20px;"/>
+											
+										</div>
+										<div class="large-10 column">
+											<h3>{{ convenient.flight.berangkat.name }}</h3>
+											<h4>{{ convenient.flight.berangkat.time }}</h4>
+											<h3>{{ convenient.flight.pulang.name }}</h3>
+											<h4>{{ convenient.flight.pulang.time }}</h4>
+										</div>
+									</div>
+								</div>
+								<div class="belakang" style="margin: 20px 0;">
+									<div class="row">
+										<div class="large-2 column">
+											<img src="img/2.png" style="width:50px; height: 60px; margin: 20px;"/>
+											
+										</div>
+										<div class="large-10 column">
+											<h3>{{ convenient.hotel.name }}</h3>
+											<h3>Features</h3>
+											<ul>
+												<li ng-repeat="feat in convenient.hotel.features">
+													{{ feat }}
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="belakang" style="margin: 20px 0;">
+									<div class="row">
+										<div class="large-2 column">
+											<img src="img/3.png" style="width: 50px; height: 65px; margin: 20px;"/>
+										</div>
+										<div class="large-10 column">
+											<h4>{{ convenient.car.type }}</h4>
+											<h3> {{ convenient.car.name }}</h3>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="large-6 columns">
+										<h2 class="biru">
+											{{ convenient.totalPrice }}
+										</h2> 
+									</div>
+									<div class="large-6 columns">
+										<a href="#" class="medium success button right">Next</a>
+									</div>
+								</div>
+							</div>				
+						</div>			
+					</div>
+					<div class="large-2 columns">
+						<img src="img/panah.png" style="margin-top: 200px;"/>
+					</div>
+					<div class="large-5 columns">
+						<div class="belakang" style="padding: 20px;">
+							<h2 class="putih" style="margin-left: 20px;">Cheapest</h2>
+							<div class="belakang2 result" style="margin: 0; padding: 20px 20px 0;">
+								<div class="belakang" style="margin: 0 0 20px;">
+									<div class="row">
+										<div class="large-2 column">
+											<img src="img/1.png" style="width:100px; height: 50px; margin: 20px;"/>
+											
+										</div>
+										<div class="large-10 column">
+											<h3>{{ cheapest.flight.berangkat.name }}</h3>
+											<h4>{{ cheapest.flight.berangkat.time }}</h4>
+											<h3>{{ cheapest.flight.pulang.name }}</h3>
+											<h4>{{ cheapest.flight.pulang.time }}</h4>
+										</div>
+									</div>
+								</div>
+								<div class="belakang" style="margin: 20px 0;">
+									<div class="row">
+										<div class="large-2 column">
+											<img src="img/2.png" style="width:50px; height: 60px; margin: 20px;"/>
+											
+										</div>
+										<div class="large-10 column">
+											<h3>{{ cheapest.hotel.name }}</h3>
+											<h3>Features</h3>
+											<ul>
+												<li ng-repeat="feat in cheapest.hotel.features">
+													{{ feat }}
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="belakang" style="margin: 20px 0;">
+									<div class="row">
+										<div class="large-2 column">
+											<img src="img/3.png" style="width: 50px; height: 65px; margin: 20px;"/>
+										</div>
+										<div class="large-10 column">
+											<h4>{{ cheapest.car.type }}</h4>
+											<h3> {{ cheapest.car.name }}</h3>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="large-6 columns">
+										<h2 class="biru">
+											{{ cheapest.totalPrice }}
+										</h2> 
+									</div>
+									<div class="large-6 columns">
+										<a href="#" class="medium success button right">Next</a>
+									</div>
+								</div>
+							</div>				
+						</div>			
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<footer>
+			<div class="row">
+				<div class="large-12 columns">
+					<p>Copyright &copy; 2014 RISTEK</p>		
+				</div>			
+			</div>
+		</footer>
+		<script src="js/viewmodel.js"></script>
+	</body>
+	</html>
